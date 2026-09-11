@@ -45,6 +45,7 @@ Check out the detailed guides we've added to master your setup:
 - [🔦 Fix Hotspots (problematic-greenscreen.html)](problematic-greenscreen.html) — Resolving overblown white reflections on the green screen.
 - [💡 Fix Bottom Light (bottom-light-issue.html)](bottom-light-issue.html) — Fixing underlit green screens from the floor.
 - [💬 Implementing Captions (captions.html)](captions.html) — Adding live or post-production captions.
+- [🎨 VDO.Ninja Captions CSS (vdo-ninja-captions.html)](vdo-ninja-captions.html) — Custom CSS to animate captions.
 
 ## 🐙 Repo
 
