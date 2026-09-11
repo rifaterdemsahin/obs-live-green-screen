@@ -72,62 +72,48 @@
     <header class="hero">
       <h1>🎨 VDO.Ninja Animated Captions CSS</h1>
       <p class="lede">
-        To create <strong>animated captions</strong> using <strong>VDO.Ninja</strong> (or Caption.Ninja), capture transcription data via speech-to-text parameters, send it to a browser overlay, and style the elements with <strong>Custom CSS</strong> inside OBS.
+        To create <strong>animated captions</strong> using <strong>Caption.Ninja</strong>, you capture transcription data via speech-to-text parameters, send it to a browser overlay, and style the elements with <strong>Custom CSS</strong> inside OBS.
       </p>
     </header>
 
+    <div class="callout warn">
+      <h2>⚠️ Text Wrapping Fix</h2>
+      <p>By default, forcing <code>display: inline-block</code> on all elements breaks standard CSS text-wrapping in Caption.Ninja, causing text to run off-screen in a single horizontal line.</p>
+      <p>To allow multi-line wrapping while keeping the red text, white outline, transparency, and pop animations, follow the updated steps below.</p>
+    </div>
+
     <div class="callout ok">
-      <h2>Step 1: Enable Transcription on Your Audio Source</h2>
-      <p>If you are using VDO.Ninja to bring guest audio or your own webcam into OBS:</p>
-      <ol>
-        <li>Create your <strong>Push Link</strong> (the sender URL for your microphone/camera).</li>
-        <li>Append <code>&transcribe</code> to the end of your Push URL:
-          <pre><code>https://vdo.ninja/?push=YOUR_STREAM_ID&transcribe</code></pre>
-        </li>
-      </ol>
-      <p><em>(This tells the browser to process speech-to-text continuously while streaming).</em></p>
-    </div>
-
-    <div class="callout">
-      <h2>Step 2: Configure the Overlay Link in OBS</h2>
-      <ol>
-        <li>Open your <strong>View Link</strong> (or Director Overlay link) where the video is received in OBS.</li>
-        <li>Add <code>&closedcaptions</code> to the View URL to display live transcribed text over the video element:
-          <pre><code>https://vdo.ninja/?view=YOUR_STREAM_ID&closedcaptions</code></pre>
-        </li>
-        <li>Alternatively, if you want <strong>standalone caption overlays</strong> without the video feed, go to <a href="https://caption.ninja/"><strong>Caption.Ninja</strong></a>:
-          <ul>
-            <li>Use this working <strong>Overlay URL</strong> (which includes <code>&lang=en-US</code> for English):
-              <pre><code>https://caption.ninja/overlay?room=qpxsL6y9Ho9SPCo0&lang=en-US</code></pre>
-            </li>
-            <li><strong>Important Settings Tip:</strong> To get single-line kinetic pop-ups, set <strong>Max Lines</strong> in the Caption.ninja customize overlay settings to <code>1</code>.</li>
-            <li>Add this link into OBS as a <strong>Browser Source</strong> (Width: <code>1920</code>, Height: <code>1080</code>).</li>
-          </ul>
-        </li>
-      </ol>
-    </div>
-
-    <div class="callout">
-      <h2>Step 3: Inject Dynamic CSS Animations in OBS</h2>
-      <p>To replace standard scrolling text with <strong>word-by-word pop-ups</strong>, inject CSS into the OBS Browser Source.</p>
-      <ol>
-        <li>In OBS, double-click your VDO.Ninja / Caption.Ninja <strong>Browser Source</strong>.</li>
-        <li>Scroll down to the <strong>Custom CSS</strong> text box.</li>
-        <li>Replace the default CSS with the following snippet:
-          <pre><code>/* Force absolute background transparency everywhere */
-html, body, div, p, span, section, main, #overlayMsgs, .caption-box {
+      <h2>Step 1: Update the OBS Custom CSS</h2>
+      <p>Double-click your Browser Source in OBS, clear out the <strong>Custom CSS</strong> field entirely, and paste this updated stylesheet:</p>
+      <pre><code>/* 1. Reset background and allow text wrapping */
+html, body, div, p, span, section, main, #output, #overlayMsgs {
   background-color: transparent !important;
   background: none !important;
   box-shadow: none !important;
-  margin: 0px auto;
-  overflow: hidden;
+  margin: 0 auto !important;
+  overflow: visible !important;
+  white-space: normal !important; /* Forces text to wrap onto new lines */
+  word-wrap: break-word !important;
 }
 
-/* Target all text elements for Red with White Border */
+/* 2. Container sizing and alignment */
+body, #output, #overlayMsgs {
+  width: 90% !important; /* Constrains line width so text wraps before the screen edge */
+  max-width: 1600px !important;
+  text-align: center !important;
+  position: absolute !important;
+  bottom: 50px !important; /* Positions captions near the bottom center */
+  left: 0 !important;
+  right: 0 !important;
+}
+
+/* 3. Base text style: Red with White Border */
 * {
-  color: #FF0000 !important; /* Pure Red Text */
+  color: #FF0000 !important; /* Red text */
   font-family: 'Montserrat', 'Arial Black', sans-serif !important;
   font-weight: 900 !important;
+  font-size: 46px !important;
+  line-height: 1.3 !important;
   text-transform: uppercase !important;
   text-shadow: 
     -3px -3px 0 #FFFFFF,  
@@ -137,38 +123,42 @@ html, body, div, p, span, section, main, #overlayMsgs, .caption-box {
     -4px  0px 0 #FFFFFF,
      4px  0px 0 #FFFFFF,
      0px -4px 0 #FFFFFF,
-     0px  4px 0 #FFFFFF !important; /* Thick White Border */
+     0px  4px 0 #FFFFFF !important; /* Thick white outline */
 }
 
-/* Pop animation for individual words */
-div, p, span, h1, h2, h3 {
-  display: inline-block !important;
-  animation: redPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+/* 4. Pop-in animation for individual words ONLY */
+span {
+  display: inline !important; /* Keeps inline flow so wrapping works naturally */
+  animation: redPop 0.15s ease-out forwards !important;
 }
 
 @keyframes redPop {
   0% {
     opacity: 0;
-    transform: scale(0.5) translateY(12px);
-  }
-  70% {
-    transform: scale(1.15) translateY(-3px);
+    transform: translateY(6px);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: translateY(0);
   }
 }</code></pre>
-        </li>
-      </ol>
     </div>
 
     <div class="callout">
-      <h2>Verification Step</h2>
+      <h2>Step 2: Add Word-Wrap Limits to Your URL</h2>
+      <p>Caption.Ninja can automatically force a line break after a set number of words. Add <code>&maxwords=6</code> to your URL so it breaks into 2 lines cleanly.</p>
+      <p>Update your Browser Source <strong>URL</strong> to this:</p>
+      <pre><code>https://caption.ninja/overlay?room=qpxsL6y9Ho9SPCo0&maxlines=2&clear&interimmaxlines=2&maxwords=6</code></pre>
+    </div>
+
+    <div class="callout">
+      <h2>Step 3: Refresh the Source</h2>
       <ol>
-        <li>Unmute your microphone on the VDO.Ninja push page and begin speaking.</li>
-        <li>Observe your OBS Browser Source preview: as the browser finalizes incoming speech chunks, each phrase or line should scale up instantly with a kinetic bounce before resting into place.</li>
+        <li>In the Browser Source properties, scroll down and click <strong>Refresh cache of current page</strong>.</li>
+        <li>Make sure your Browser Source dimensions are set to <strong>Width: 1920</strong> and <strong>Height: 1080</strong>.</li>
+        <li>Click <strong>OK</strong>.</li>
       </ol>
+      <p><strong>Verification:</strong> Speak a full sentence into your microphone—the text will wrap cleanly onto 2 lines near the bottom of the screen without running off the edge.</p>
     </div>
   </div>
   <script src="assets/nav.js"></script>
