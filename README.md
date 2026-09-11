@@ -4,6 +4,17 @@
 
 Physical green screen, native OBS keying, 🚫 no AI background-removal plugins, ⚡ no second render.
 
+## ❌ Bad example player
+
+Chrome / browser green-screen gone wrong (this is the **bad** look):
+
+- ▶️ On the live page: https://rifaterdemsahin.github.io/obs-live-green-screen/#bad
+- 📦 Clip: `assets/bad-green-screen-chrome-example.mp4` (full WhatsApp file, 11 MB — under the 24 MB cap)
+
+## ✅ Checkboxes
+
+The live page has checkboxes on every setup step. Checks stay in your browser (`localStorage`) so you can tick them off as you go.
+
 ## 🎬 Walkthrough video
 
 Embed is on the live page. Direct link:
