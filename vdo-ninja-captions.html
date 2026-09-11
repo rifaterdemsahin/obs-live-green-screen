@@ -77,42 +77,49 @@
     </header>
 
     <div class="callout warn">
-      <h2>⚠️ Text Wrapping Fix</h2>
-      <p>By default, forcing <code>display: inline-block</code> on all elements breaks standard CSS text-wrapping in Caption.Ninja, causing text to run off-screen in a single horizontal line.</p>
-      <p>To allow multi-line wrapping while keeping the red text, white outline, transparency, and pop animations, follow the updated steps below.</p>
+      <h2>⚠️ Text Wrapping & Overlapping Fix</h2>
+      <p>Caption.Ninja creates multiple overlapping HTML <code>div</code> blocks for interim and final transcriptions. Combined with <code>position: absolute</code> and custom animations, this causes old text containers to stack on top of each other indefinitely.</p>
+      <p>To resolve the overlapping text and force old captions to automatically disappear after a few seconds, follow the updated steps below.</p>
     </div>
 
     <div class="callout ok">
       <h2>Step 1: Update the OBS Custom CSS</h2>
       <p>Double-click your Browser Source in OBS, clear out the <strong>Custom CSS</strong> field entirely, and paste this updated stylesheet:</p>
-      <pre><code>/* 1. Reset background and allow text wrapping */
-html, body, div, p, span, section, main, #output, #overlayMsgs {
+      <pre><code>/* 1. Reset container flow to prevent static position stacking */
+html, body {
   background-color: transparent !important;
   background: none !important;
-  box-shadow: none !important;
   margin: 0 auto !important;
-  overflow: visible !important;
-  white-space: normal !important; /* Forces text to wrap onto new lines */
+  padding: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* 2. Position the main caption container at bottom center */
+#output, #overlayMsgs, body > div {
+  position: absolute !important;
+  bottom: 80px !important;
+  left: 5% !important;
+  width: 90% !important;
+  text-align: center !important;
+  margin: 0 auto !important;
+  white-space: normal !important;
   word-wrap: break-word !important;
 }
 
-/* 2. Container sizing and alignment */
-body, #output, #overlayMsgs {
-  width: 90% !important; /* Constrains line width so text wraps before the screen edge */
-  max-width: 1600px !important;
-  text-align: center !important;
-  position: absolute !important;
-  bottom: 50px !important; /* Positions captions near the bottom center */
-  left: 0 !important;
-  right: 0 !important;
+/* 3. Hide old duplicate/interim containers to stop overlapping text */
+#output > div:not(:last-child),
+#overlayMsgs > div:not(:last-child) {
+  display: none !important;
 }
 
-/* 3. Base text style: Red with White Border */
+/* 4. Base text style: Red with White Border */
 * {
-  color: #FF0000 !important; /* Red text */
+  color: #FF0000 !important;
   font-family: 'Montserrat', 'Arial Black', sans-serif !important;
   font-weight: 900 !important;
-  font-size: 46px !important;
+  font-size: 48px !important;
   line-height: 1.3 !important;
   text-transform: uppercase !important;
   text-shadow: 
@@ -123,42 +130,36 @@ body, #output, #overlayMsgs {
     -4px  0px 0 #FFFFFF,
      4px  0px 0 #FFFFFF,
      0px -4px 0 #FFFFFF,
-     0px  4px 0 #FFFFFF !important; /* Thick white outline */
+     0px  4px 0 #FFFFFF !important;
 }
 
-/* 4. Pop-in animation for individual words ONLY */
+/* 5. Clean pop-in without animation freeze */
 span {
-  display: inline !important; /* Keeps inline flow so wrapping works naturally */
-  animation: redPop 0.15s ease-out forwards !important;
-}
-
-@keyframes redPop {
-  0% {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  display: inline !important;
 }</code></pre>
     </div>
 
     <div class="callout">
-      <h2>Step 2: Add Word-Wrap Limits to Your URL</h2>
-      <p>Caption.Ninja can automatically force a line break after a set number of words. Add <code>&maxwords=6</code> to your URL so it breaks into 2 lines cleanly.</p>
-      <p>Update your Browser Source <strong>URL</strong> to this:</p>
-      <pre><code>https://caption.ninja/overlay?room=qpxsL6y9Ho9SPCo0&maxlines=2&clear&interimmaxlines=2&maxwords=6</code></pre>
+      <h2>Step 2: Update the URL Parameters to Auto-Clear Old Text</h2>
+      <p>Caption.Ninja has built-in parameters to automatically clear old captions after a set period of silence and force single-buffer text output so overlapping is impossible.</p>
+      <p>Update your Browser Source <strong>URL</strong> in OBS to this exact link:</p>
+      <pre><code>https://caption.ninja/overlay?room=qpxsL6y9Ho9SPCo0&maxlines=2&clear=3&timeout=3&interimmaxlines=2&maxwords=6</code></pre>
+      <h3 style="margin-top: 14px; margin-bottom: 8px;">What these parameters fix:</h3>
+      <ul>
+        <li><code>&clear=3</code>: Clears the caption text automatically after <strong>3 seconds of silence</strong>.</li>
+        <li><code>&timeout=3</code>: Forces old transcriptions to expire so they don't linger indefinitely on screen.</li>
+        <li><code>#output > div:not(:last-child) { display: none !important; }</code> in the CSS: Hides previous sentence containers so new text never overlaps on top of old text.</li>
+      </ul>
     </div>
 
     <div class="callout">
       <h2>Step 3: Refresh the Source</h2>
       <ol>
-        <li>In the Browser Source properties, scroll down and click <strong>Refresh cache of current page</strong>.</li>
-        <li>Make sure your Browser Source dimensions are set to <strong>Width: 1920</strong> and <strong>Height: 1080</strong>.</li>
+        <li>Scroll down to the bottom of the Browser Source properties in OBS.</li>
+        <li>Click <strong>Refresh cache of current page</strong>.</li>
         <li>Click <strong>OK</strong>.</li>
       </ol>
-      <p><strong>Verification:</strong> Speak a full sentence into your microphone—the text will wrap cleanly onto 2 lines near the bottom of the screen without running off the edge.</p>
+      <p><strong>Verification:</strong> Speak into your mic. The text will show up cleanly without stacking on top of old lines, and once you stop speaking, the text will vanish completely after 3 seconds.</p>
     </div>
   </div>
   <script src="assets/nav.js"></script>
