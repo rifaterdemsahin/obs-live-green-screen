@@ -146,6 +146,19 @@
     .layer.top { border-style: solid; border-color: var(--green); background: rgba(0,177,64,.12); }
     .check { color: var(--green); font-weight: 800; }
     footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 18px; }
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .video-wrap iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+    }
+    .video-link { margin: 12px 0 0; }
     @media (max-width: 640px) {
       .arrow { width: 100%; text-align: center; }
       .node { min-width: 100%; }
@@ -155,6 +168,7 @@
 <body>
   <nav class="top">
     <div class="inner">
+      <a href="#video">Video</a>
       <a href="#why">Why hardware keying</a>
       <a href="#chain">Signal chain</a>
       <a href="#step-1">1 · Camera lock</a>
@@ -179,10 +193,29 @@
         That is the right input for <strong>native OBS Chroma Key</strong> — not an AI background-removal plugin.
       </p>
       <div class="hero-actions">
-        <a class="btn" href="#step-1">Start with camera lock</a>
+        <a class="btn" href="#video">Watch the walkthrough</a>
+        <a class="btn ghost" href="https://youtu.be/UWhA0rqQOeg">YouTube</a>
         <a class="btn ghost" href="https://github.com/rifaterdemsahin/obs-live-green-screen">Repo</a>
       </div>
     </header>
+
+    <section id="video">
+      <h2>Walkthrough video</h2>
+      <p class="lede" style="margin-bottom:14px">
+        FiniteSingularity — <em>Your OBS green screen is all wrong, and the fix is so simple!</em>
+      </p>
+      <div class="video-wrap">
+        <iframe
+          src="https://www.youtube.com/embed/UWhA0rqQOeg"
+          title="Your OBS green screen is all wrong, and the fix is so simple!"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+      </div>
+      <p class="video-link">
+        Watch on YouTube: <a href="https://youtu.be/UWhA0rqQOeg">https://youtu.be/UWhA0rqQOeg</a>
+      </p>
+    </section>
 
     <section id="why">
       <div class="callout warn">
@@ -308,7 +341,7 @@
     </section>
 
     <footer>
-      <p>Rifat Erdem Sahin · <a href="https://github.com/rifaterdemsahin/obs-live-green-screen">rifaterdemsahin/obs-live-green-screen</a> · GitHub Pages</p>
+      <p>Rifat Erdem Sahin · <a href="https://github.com/rifaterdemsahin/obs-live-green-screen">rifaterdemsahin/obs-live-green-screen</a> · GitHub Pages · <a href="https://youtu.be/UWhA0rqQOeg">Walkthrough video</a></p>
     </footer>
   </div>
 </body>

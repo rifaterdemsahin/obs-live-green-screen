@@ -4,6 +4,12 @@ Sony ZV-1 → Elgato Cam Link 4K → Mac Mini → OBS Chroma Key.
 
 Physical green screen, native OBS keying, no AI background-removal plugins, no second render.
 
+## Walkthrough video
+
+Embed is on the live page. Direct link:
+
+**https://youtu.be/UWhA0rqQOeg** — FiniteSingularity, *Your OBS green screen is all wrong, and the fix is so simple!*
+
 ## Live guide
 
 **https://rifaterdemsahin.github.io/obs-live-green-screen/**
