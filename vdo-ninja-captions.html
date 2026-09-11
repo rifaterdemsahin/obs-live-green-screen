@@ -109,7 +109,9 @@
         </li>
         <li>Alternatively, if you want <strong>standalone caption overlays</strong> without the video feed, go to <a href="https://caption.ninja/"><strong>Caption.Ninja</strong></a>:
           <ul>
-            <li>Launch your session and copy the generated <strong>Overlay URL</strong>.</li>
+            <li>Use this working <strong>Overlay URL</strong> (or generate your own):
+              <pre><code>https://caption.ninja/overlay?room=qpxsL6y9Ho9SPCo0</code></pre>
+            </li>
             <li>Add this link into OBS as a <strong>Browser Source</strong> (Width: <code>1920</code>, Height: <code>1080</code>).</li>
           </ul>
         </li>
@@ -123,39 +125,45 @@
         <li>In OBS, double-click your VDO.Ninja / Caption.Ninja <strong>Browser Source</strong>.</li>
         <li>Scroll down to the <strong>Custom CSS</strong> text box.</li>
         <li>Replace the default CSS with the following snippet:
-          <pre><code>/* Hide default background */
-body {
-  background-color: rgba(0, 0, 0, 0);
+          <pre><code>/* Force absolute background transparency everywhere */
+html, body, div, p, span, section, main, #overlayMsgs, .caption-box {
+  background-color: transparent !important;
+  background: none !important;
+  box-shadow: none !important;
   margin: 0px auto;
   overflow: hidden;
-  font-family: 'Montserrat', 'Arial Black', sans-serif;
 }
 
-/* Style the text box */
-#overlayMsgs, .caption-box {
-  font-size: 42px;
-  font-weight: 900;
-  color: #ffffff;
-  text-shadow: 3px 3px 0px #000000, -3px -3px 0px #000000, 3px -3px 0px #000000, -3px 3px 0px #000000;
-  text-align: center;
-  padding: 20px;
+/* Target all text elements for Red with White Border */
+* {
+  color: #FF0000 !important; /* Pure Red Text */
+  font-family: 'Montserrat', 'Arial Black', sans-serif !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  text-shadow: 
+    -3px -3px 0 #FFFFFF,  
+     3px -3px 0 #FFFFFF,
+    -3px  3px 0 #FFFFFF,
+     3px  3px 0 #FFFFFF,
+    -4px  0px 0 #FFFFFF,
+     4px  0px 0 #FFFFFF,
+     0px -4px 0 #FFFFFF,
+     0px  4px 0 #FFFFFF !important; /* Thick White Border */
 }
 
-/* Animate every new word/span as it gets pushed */
-#overlayMsgs span, span.word {
-  display: inline-block;
-  margin: 0 4px;
-  animation: popIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+/* Pop animation for individual words */
+div, p, span, h1, h2, h3 {
+  display: inline-block !important;
+  animation: redPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
 }
 
-/* Keyframe for Kinetic Pop-In Effect */
-@keyframes popIn {
+@keyframes redPop {
   0% {
     opacity: 0;
-    transform: scale(0.6) translateY(10px);
+    transform: scale(0.5) translateY(12px);
   }
   70% {
-    transform: scale(1.15) translateY(-2px);
+    transform: scale(1.15) translateY(-3px);
   }
   100% {
     opacity: 1;
