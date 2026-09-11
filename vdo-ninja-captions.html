@@ -67,19 +67,7 @@
   </style>
 </head>
 <body>
-  <nav class="top">
-    <div class="inner">
-      <a href="index.html">🏠 Home</a>
-      <a href="obs-settings.html">⚙️ OBS Settings</a>
-      <a href="problematic-greenscreen.html">🔦 Fix Hotspots</a>
-      <a href="bottom-light-issue.html">💡 Fix Bottom Light</a>
-      <a href="captions.html">💬 Captions</a>
-      <a href="vdo-ninja-captions.html" class="active">🎨 VDO.Ninja CSS</a>
-      <a href="index.html#bad">❌ Bad example</a>
-      <a href="index.html#video">🎬 Video</a>
-    </div>
-  </nav>
-
+  
   <div class="wrap">
     <header class="hero">
       <h1>🎨 VDO.Ninja Animated Captions CSS</h1>
@@ -109,9 +97,10 @@
         </li>
         <li>Alternatively, if you want <strong>standalone caption overlays</strong> without the video feed, go to <a href="https://caption.ninja/"><strong>Caption.Ninja</strong></a>:
           <ul>
-            <li>Use this working <strong>Overlay URL</strong> (or generate your own):
-              <pre><code>https://caption.ninja/overlay?room=qpxsL6y9Ho9SPCo0</code></pre>
+            <li>Use this working <strong>Overlay URL</strong> (which includes <code>&lang=en-US</code> for English):
+              <pre><code>https://caption.ninja/overlay?room=qpxsL6y9Ho9SPCo0&lang=en-US</code></pre>
             </li>
+            <li><strong>Important Settings Tip:</strong> To get single-line kinetic pop-ups, set <strong>Max Lines</strong> in the Caption.ninja customize overlay settings to <code>1</code>.</li>
             <li>Add this link into OBS as a <strong>Browser Source</strong> (Width: <code>1920</code>, Height: <code>1080</code>).</li>
           </ul>
         </li>
@@ -182,5 +171,6 @@ div, p, span, h1, h2, h3 {
       </ol>
     </div>
   </div>
+  <script src="assets/nav.js"></script>
 </body>
 </html>
