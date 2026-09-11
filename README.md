@@ -11,6 +11,11 @@ Chrome / browser green-screen gone wrong (this is the **bad** look):
 - ▶️ On the live page: https://rifaterdemsahin.github.io/obs-live-green-screen/#bad
 - 📦 Clip: `assets/bad-green-screen-chrome-example.mp4` (first 24 MB of the WhatsApp file; the source is 10.0 MiB so this is the full clip)
 
+## ✅ Good example player
+
+- 📦 Clip: `assets/good_example_2026-09-11_19-08-18.mp4`
+- **Setup:** I opened all the lights and moved in the front not to have a shadow on the green screen.
+
 ## ✅ Checkboxes
 
 The live page has checkboxes on every setup step. Checks stay in your browser (`localStorage`) so you can tick them off as you go.
