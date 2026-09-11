@@ -9,7 +9,7 @@ Physical green screen, native OBS keying, 🚫 no AI background-removal plugins,
 Chrome / browser green-screen gone wrong (this is the **bad** look):
 
 - ▶️ On the live page: https://rifaterdemsahin.github.io/obs-live-green-screen/#bad
-- 📦 Clip: `assets/bad-green-screen-chrome-example.mp4` (full WhatsApp file, 11 MB — under the 24 MB cap)
+- 📦 Clip: `assets/bad-green-screen-chrome-example.mp4` (first 24 MB of the WhatsApp file; the source is 10.0 MiB so this is the full clip)
 
 ## ✅ Checkboxes
 
