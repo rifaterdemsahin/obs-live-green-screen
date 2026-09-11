@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>OBS Live Chroma Key · Sony ZV-1 + Elgato Cam Link 4K</title>
+  <meta name="description" content="Lock the Sony ZV-1, key green in OBS with the Cam Link 4K, kill spill on Mac, and record a finished talking-head with zero re-render." />
+  <meta name="author" content="Rifat Erdem Sahin" />
+  <link rel="canonical" href="https://rifaterdemsahin.github.io/obs-live-green-screen/" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🟢</text></svg>" />
+  <style>
+    :root {
+      --bg: #07110c;
+      --panel: #102018;
+      --panel-2: #163024;
+      --line: #234833;
+      --text: #eef8f1;
+      --muted: #9bb8a6;
+      --green: #22c55e;
+      --gs: #00b140;
+      --cyan: #5eead4;
+      --amber: #fbbf24;
+      --rose: #fb7185;
+      --ink: #04140c;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --radius: 16px;
+      --font: "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background:
+        radial-gradient(1100px 480px at 85% -12%, rgba(0,177,64,.22), transparent 52%),
+        radial-gradient(800px 380px at -8% 18%, rgba(94,234,212,.08), transparent 46%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    a { color: var(--cyan); }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 88px; }
+    nav.top {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(16px);
+      background: rgba(7,17,12,.82);
+      border-bottom: 1px solid var(--line);
+    }
+    nav.top .inner {
+      max-width: 1080px; margin: 0 auto; padding: 10px 20px;
+      display: flex; gap: 8px; overflow: auto;
+    }
+    nav.top a {
+      color: var(--muted); text-decoration: none; font-weight: 650; font-size: 13px;
+      padding: 8px 12px; border-radius: 999px; white-space: nowrap;
+    }
+    nav.top a:hover, nav.top a.active { color: var(--text); background: var(--panel); }
+    header.hero { padding: 36px 0 8px; }
+    .kicker {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan);
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid var(--line); background: var(--panel);
+      padding: 4px 10px; border-radius: 999px; color: var(--muted);
+      letter-spacing: 0; text-transform: none; font-size: 12px;
+    }
+    h1 { font-size: clamp(28px, 4.4vw, 46px); line-height: 1.12; margin: 10px 0 10px; }
+    .lede { color: var(--muted); max-width: 760px; font-size: 18px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .btn {
+      appearance: none; border: 0; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 16px; border-radius: 12px; font-weight: 700; font-size: 15px; color: var(--ink);
+      background: linear-gradient(180deg, #7ee7a8, var(--green));
+    }
+    .btn.ghost { background: var(--panel-2); color: var(--text); border: 1px solid var(--line); }
+    section { margin: 42px 0; }
+    h2 { font-size: 24px; margin: 0 0 12px; }
+    h3 { font-size: 17px; margin: 0 0 8px; }
+    p { margin: 0 0 12px; }
+    .callout {
+      border: 1px solid var(--line); background: var(--panel);
+      border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow);
+    }
+    .callout.warn {
+      border-color: rgba(251,113,133,.45);
+      background: linear-gradient(180deg, rgba(251,113,133,.08), var(--panel));
+    }
+    .callout.ok {
+      border-color: rgba(34,197,94,.45);
+      background: linear-gradient(180deg, rgba(0,177,64,.12), var(--panel));
+    }
+    .grid-2 { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .card {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow);
+    }
+    .chain {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 16px;
+    }
+    .node {
+      background: var(--panel-2); border: 1px solid var(--line);
+      border-radius: 12px; padding: 12px 14px; min-width: 140px;
+    }
+    .node strong { display: block; color: var(--green); font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+    .node span { color: var(--muted); font-size: 13px; }
+    .arrow { color: var(--amber); font-weight: 800; }
+    ol.steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; }
+    ol.steps > li {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);
+    }
+    .step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--gs); color: #04140c; font-weight: 800; margin-right: 8px;
+    }
+    ol.inner { margin: 8px 0 0 18px; padding: 0; color: var(--muted); }
+    ol.inner li { margin: 6px 0; }
+    table {
+      width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 10px;
+    }
+    th, td {
+      text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top;
+    }
+    th { color: var(--cyan); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    td code, .mono, pre {
+      font-family: var(--mono); font-size: 13px;
+    }
+    pre {
+      background: #06140d; border: 1px solid var(--line); border-radius: 12px;
+      padding: 16px; overflow: auto; color: #d7ffe6; line-height: 1.45;
+    }
+    .stack {
+      display: grid; gap: 8px; max-width: 620px;
+    }
+    .layer {
+      border: 1px dashed var(--line); border-radius: 12px; padding: 12px 14px;
+      background: var(--panel-2);
+    }
+    .layer.top { border-style: solid; border-color: var(--green); background: rgba(0,177,64,.12); }
+    .check { color: var(--green); font-weight: 800; }
+    footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 18px; }
+    @media (max-width: 640px) {
+      .arrow { width: 100%; text-align: center; }
+      .node { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="top">
+    <div class="inner">
+      <a href="#why">Why hardware keying</a>
+      <a href="#chain">Signal chain</a>
+      <a href="#step-1">1 · Camera lock</a>
+      <a href="#step-2">2 · Chroma Key</a>
+      <a href="#step-3">3 · Spill</a>
+      <a href="#step-4">4 · Scene + record</a>
+      <a href="https://github.com/rifaterdemsahin/obs-live-green-screen">GitHub</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header class="hero">
+      <div class="kicker">
+        Live keying
+        <span class="pill">Sony ZV-1</span>
+        <span class="pill">Elgato Cam Link 4K</span>
+        <span class="pill">Mac Mini + OBS</span>
+      </div>
+      <h1>Physical green screen, live chroma key, zero re-render.</h1>
+      <p class="lede">
+        The Sony ZV-1 feeds a crisp, uncompressed clean HDMI signal into the Cam Link 4K.
+        That is the right input for <strong>native OBS Chroma Key</strong> — not an AI background-removal plugin.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="#step-1">Start with camera lock</a>
+        <a class="btn ghost" href="https://github.com/rifaterdemsahin/obs-live-green-screen">Repo</a>
+      </div>
+    </header>
+
+    <section id="why">
+      <div class="callout warn">
+        <h2>Do not use AI background removal</h2>
+        <p>
+          You are lighting a real green screen. AI segmentation often leaves soft edges and flicker around hair.
+          Use the camera’s clean HDMI plus OBS’s hardware-friendly Chroma Key filter instead.
+          The result is a finished composite in the recording — no second render pass.
+        </p>
+      </div>
+    </section>
+
+    <section id="chain">
+      <h2>Signal chain</h2>
+      <div class="chain" aria-label="Hardware signal path">
+        <div class="node"><strong>Sony ZV-1</strong><span>Clean HDMI, Rec.709, locked exposure</span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="node"><strong>Cam Link 4K</strong><span>Uncompressed capture into the Mac Mini</span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="node"><strong>OBS Chroma Key</strong><span>Green key + spill reduction</span></div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="node"><strong>Record</strong><span>Talking head already composited</span></div>
+      </div>
+    </section>
+
+    <section>
+      <ol class="steps">
+        <li id="step-1">
+          <h2><span class="step-num">1</span> Lock the Sony ZV-1</h2>
+          <p>Auto camera settings will drift the green, and the key will break mid-take. Freeze everything.</p>
+          <ol class="inner">
+            <li><strong>Exposure:</strong> Dial to <strong>Manual (M)</strong>. Example for 60 fps: shutter <code>1/125</code>s, ISO 400 or 800, aperture frozen.</li>
+            <li><strong>White balance:</strong> Switch off Auto White Balance (AWB). Use <strong>Daylight</strong> or a custom Kelvin (e.g. 5600K).</li>
+            <li><strong>Picture Profile:</strong> <strong>PP Off</strong> so the camera outputs standard Rec.709 with usable green contrast.</li>
+          </ol>
+          <table>
+            <thead>
+              <tr><th>Control</th><th>Set to</th><th>Why</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Mode</td><td>M</td><td>Stops auto exposure from shifting the key</td></tr>
+              <tr><td>Shutter</td><td>1/125s @ 60fps</td><td>Matches frame rate without flicker</td></tr>
+              <tr><td>ISO</td><td>400–800</td><td>Clean enough, still bright on the subject</td></tr>
+              <tr><td>WB</td><td>Daylight / 5600K</td><td>Green stays the same green all take</td></tr>
+              <tr><td>Picture Profile</td><td>Off</td><td>Rec.709, not a log/flat look that weakens the key</td></tr>
+            </tbody>
+          </table>
+        </li>
+
+        <li id="step-2">
+          <h2><span class="step-num">2</span> Configure Chroma Key in OBS</h2>
+          <ol class="inner">
+            <li>Right-click the <strong>Cam Link / ZV-1</strong> source → <strong>Filters</strong>.</li>
+            <li>In <em>Effect Filters</em>, click <strong>+</strong> → <strong>Chroma Key</strong>.</li>
+            <li><strong>Key Color Type:</strong> keep <strong>Green</strong>.</li>
+            <li><strong>Similarity:</strong> drag all the way left, then move right until the backdrop is fully black — usually <strong>300–400</strong>. Stop the moment the green is gone. Further and shirts go translucent.</li>
+            <li><strong>Smoothness:</strong> keep low, about <strong>10–80</strong>. Higher values melt shoulder and hair edges.</li>
+          </ol>
+          <table>
+            <thead>
+              <tr><th>Filter</th><th>Starting value</th><th>Stop when</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Key Color Type</td><td>Green</td><td>—</td></tr>
+              <tr><td>Similarity</td><td>300–400</td><td>Backdrop is black; fabric is still solid</td></tr>
+              <tr><td>Smoothness</td><td>10–80</td><td>Edges stay sharp</td></tr>
+            </tbody>
+          </table>
+        </li>
+
+        <li id="step-3">
+          <h2><span class="step-num">3</span> Fix green spill (especially on Mac)</h2>
+          <p>Green light bounces onto hair, shoulders, and skin. Kill that bounce in the filter stack, not in a later grade.</p>
+          <ol class="inner">
+            <li>Still in <strong>Chroma Key</strong>, raise <strong>Spill Color Reduction</strong> (Green) to about <strong>100–200</strong>.</li>
+            <li>Add a <strong>Color Correction</strong> filter in the same Effect Filters list. Place it <em>below</em> Chroma Key so it runs after the key.</li>
+            <li>Drop <strong>Saturation</strong> slightly (<code>-0.05</code> to <code>-0.10</code>) or nudge Contrast. That clears the remaining green fringe so the subject sits in the replacement background.</li>
+          </ol>
+          <div class="grid-2" style="margin-top:14px">
+            <div class="card">
+              <h3>Filter order</h3>
+              <p class="mono" style="color:var(--muted);margin:0">1. Chroma Key<br>2. Color Correction</p>
+              <p style="margin-top:10px;color:var(--muted)">OBS applies effect filters top to bottom. Color Correction must sit under the key.</p>
+            </div>
+            <div class="card">
+              <h3>What “done” looks like</h3>
+              <p style="margin:0;color:var(--muted)">No lime outline on hair. Skin is not mint. Shirt opacity is 100%. Background is the image or loop — not green, not a hole.</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="step-4">
+          <h2><span class="step-num">4</span> Layer the scene and record</h2>
+          <p>Sources window, top to bottom:</p>
+          <div class="stack" role="img" aria-label="OBS source stack">
+            <div class="layer top"><strong>Top</strong> — Sony ZV-1 (Cam Link 4K) with Chroma Key applied</div>
+            <div class="layer"><strong>Bottom</strong> — Replacement background (image, video loop, or Display Capture)</div>
+          </div>
+          <pre> [ Top Source ]    → Sony ZV-1 (Cam Link 4K + Chroma Key)
+ [ Bottom Source ] → Replacement background (image / loop / display)</pre>
+          <div class="callout ok" style="margin-top:16px">
+            <h3>Verify with a 15-second clip</h3>
+            <p>
+              Put the new background behind you, hit <strong>Start Recording</strong>, talk for 15 seconds, stop.
+              Play the file in QuickTime. If edges are sharp and skin has no green tint, the setup is finished.
+              From here every video can be produced in OBS with no second render.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Quick checklist</h2>
+      <div class="card">
+        <p><span class="check">✓</span> ZV-1 on Manual, WB locked, Picture Profile off</p>
+        <p><span class="check">✓</span> Cam Link 4K as the OBS video source (not Continuity Camera / FaceTime)</p>
+        <p><span class="check">✓</span> Chroma Key on Green, Similarity 300–400, Smoothness 10–80</p>
+        <p><span class="check">✓</span> Spill reduction 100–200, Color Correction under the key</p>
+        <p><span class="check">✓</span> Camera source above the background in the scene</p>
+        <p style="margin:0"><span class="check">✓</span> 15s QuickTime check before a real take</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>Rifat Erdem Sahin · <a href="https://github.com/rifaterdemsahin/obs-live-green-screen">rifaterdemsahin/obs-live-green-screen</a> · GitHub Pages</p>
+    </footer>
+  </div>
+</body>
+</html>
