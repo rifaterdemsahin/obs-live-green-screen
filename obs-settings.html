@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>⚙️ OBS Settings & Sanity Check</title>
+  <style>
+    :root {
+      --bg: #07110c;
+      --panel: #102018;
+      --panel-2: #163024;
+      --line: #234833;
+      --text: #eef8f1;
+      --muted: #9bb8a6;
+      --green: #22c55e;
+      --gs: #00b140;
+      --cyan: #5eead4;
+      --amber: #fbbf24;
+      --rose: #fb7185;
+      --ink: #04140c;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --radius: 16px;
+      --font: "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    a { color: var(--cyan); }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 88px; }
+    nav.top {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: blur(16px);
+      background: rgba(7,17,12,.82);
+      border-bottom: 1px solid var(--line);
+    }
+    nav.top .inner {
+      max-width: 1080px; margin: 0 auto; padding: 10px 20px;
+      display: flex; gap: 8px; overflow: auto;
+    }
+    nav.top a {
+      color: var(--muted); text-decoration: none; font-weight: 650; font-size: 13px;
+      padding: 8px 12px; border-radius: 999px; white-space: nowrap;
+    }
+    nav.top a:hover, nav.top a.active { color: var(--text); background: var(--panel); }
+    header.hero { padding: 36px 0 8px; }
+    h1 { font-size: clamp(28px, 4.4vw, 46px); line-height: 1.12; margin: 10px 0 10px; }
+    .lede { color: var(--muted); max-width: 760px; font-size: 18px; }
+    .callout {
+      border: 1px solid var(--line); background: var(--panel);
+      border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow);
+      margin: 20px 0;
+    }
+    .callout.warn {
+      border-color: rgba(251,113,133,.45);
+      background: linear-gradient(180deg, rgba(251,113,133,.08), var(--panel));
+    }
+    .callout.ok {
+      border-color: rgba(34,197,94,.45);
+      background: linear-gradient(180deg, rgba(0,177,64,.12), var(--panel));
+    }
+    img { max-width: 100%; border-radius: var(--radius); border: 1px solid var(--line); margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <nav class="top">
+    <div class="inner">
+      <a href="index.html">🏠 Home</a>
+      <a href="obs-settings.html" class="active">⚙️ OBS Settings</a>
+      <a href="problematic-greenscreen.html">🔦 Fix Hotspots</a>
+      <a href="bottom-light-issue.html">💡 Fix Bottom Light</a>
+      <a href="index.html#bad">❌ Bad example</a>
+      <a href="index.html#video">🎬 Video</a>
+      <a href="index.html#step-1">📷 1 · Camera lock</a>
+      <a href="index.html#step-2">🟢 2 · Chroma Key</a>
+      <a href="index.html#step-3">✨ 3 · Spill</a>
+      <a href="index.html#step-4">🎬 4 · Scene + record</a>
+      <a href="index.html#fast-production">🚀 Fast Production</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header class="hero">
+      <h1>⚙️ OBS Settings & Sanity Check</h1>
+      <p class="lede">
+        Let's review the OBS settings screenshot to verify the layer order and scene configuration.
+      </p>
+    </header>
+
+    <div class="callout">
+      <h2>📸 OBS Screenshot</h2>
+      <img src="obs_settings.png" alt="OBS Settings Screenshot showing liveGreen scene" />
+    </div>
+
+    <div class="callout warn">
+      <h2>🚨 Sanity Check: Layer Order!</h2>
+      <p>
+        In the screenshot above, look closely at the <strong>Sources</strong> panel:
+      </p>
+      <ul>
+        <li><code>Image</code> (the background) is at the <strong>top</strong> of the list.</li>
+        <li><code>Capture Card Device</code> (the camera) is <strong>below</strong> it.</li>
+      </ul>
+      <p>
+        <strong>⚠️ This is incorrect!</strong> OBS renders sources from bottom to top. If your background image is above your camera source, it will completely cover you!
+      </p>
+    </div>
+
+    <div class="callout ok">
+      <h2>✅ The Fix: Move the Background Down</h2>
+      <p>
+        To fix this and achieve a proper green screen effect:
+      </p>
+      <ol>
+        <li>Click on the <code>Image</code> source in the Sources panel.</li>
+        <li>Click the <strong>down arrow</strong> 🔽 (or drag it down) so it sits <em>below</em> the <code>Capture Card Device</code>.</li>
+        <li>Make sure the Capture Card Device has the 🟢 Chroma Key filter applied so the background can show through!</li>
+      </ol>
+      <p>Once the layers are ordered correctly, your setup is ready for fast production recording! 🚀</p>
+    </div>
+  </div>
+</body>
+</html>
