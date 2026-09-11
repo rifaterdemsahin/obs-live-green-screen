@@ -32,6 +32,15 @@ The page walks through:
 3. ✨ Spill reduction + Color Correction on Mac
 4. 🎬 Scene stack and a 15-second QuickTime check
 
+## 📚 Setup Guides & Fixes
+
+Check out the detailed guides we've added to master your setup:
+- [🏠 Main Process (index.html)](index.html) — The full process for fast production setup.
+- [⚙️ OBS Settings Check (obs-settings.html)](obs-settings.html) — Sanity check your OBS layer order.
+- [🔦 Fix Hotspots (problematic-greenscreen.html)](problematic-greenscreen.html) — Resolving overblown white reflections on the green screen.
+- [💡 Fix Bottom Light (bottom-light-issue.html)](bottom-light-issue.html) — Fixing underlit green screens from the floor.
+- [💬 Implementing Captions (captions.html)](captions.html) — Adding live or post-production captions.
+
 ## 🐙 Repo
 
 - `index.html` — the full process

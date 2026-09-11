@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>💡 Fix Bottom Light Issues</title>
+  <title>💬 Implementing Captions</title>
   <style>
     :root {
       --bg: #07110c;
@@ -64,7 +64,8 @@
       border-color: rgba(34,197,94,.45);
       background: linear-gradient(180deg, rgba(0,177,64,.12), var(--panel));
     }
-    video { max-width: 100%; border-radius: var(--radius); border: 1px solid var(--line); margin-top: 10px; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 10px; }
   </style>
 </head>
 <body>
@@ -73,8 +74,8 @@
       <a href="index.html">🏠 Home</a>
       <a href="obs-settings.html">⚙️ OBS Settings</a>
       <a href="problematic-greenscreen.html">🔦 Fix Hotspots</a>
-      <a href="bottom-light-issue.html" class="active">💡 Fix Bottom Light</a>
-      <a href="captions.html">💬 Captions</a>
+      <a href="bottom-light-issue.html">💡 Fix Bottom Light</a>
+      <a href="captions.html" class="active">💬 Captions</a>
       <a href="index.html#bad">❌ Bad example</a>
       <a href="index.html#video">🎬 Video</a>
       <a href="index.html#step-1">📷 1 · Camera lock</a>
@@ -87,36 +88,30 @@
 
   <div class="wrap">
     <header class="hero">
-      <h1>💡 Analyzing the Bottom Light Issue</h1>
+      <h1>💬 Implementing Captions</h1>
       <p class="lede">
-        Let's look at what happens when the bottom of your green screen doesn't get enough light, causing the key to fail.
+        Captions make your content accessible and engaging. Here is how to add them to your live recordings and fast production workflow! 🎙️
       </p>
     </header>
 
-    <div class="callout warn">
-      <h2>🚨 The Problem: Underlit Green Screen</h2>
-      <video controls playsinline>
-        <source src="bottom _light_issue_2026-09-11 18-59-47.mp4" type="video/mp4" />
-      </video>
-      <p>
-        In the video above, you can see that the bottom section of the screen is not keyed out. Instead, it appears dark and noisy, blending with the subject. 🌑
-      </p>
-      <p>
-        <strong>Why this happens:</strong> The lights in your setup are likely positioned high up and aimed at your face/upper body, causing the light to fall off significantly by the time it reaches the bottom of the green screen. Because the bottom is too dark, OBS doesn't recognize it as "green" and fails to key it out.
-      </p>
+    <div class="callout ok">
+      <h2>🚀 Method 1: Live Captions in OBS (Zero Editing)</h2>
+      <p>If you want to maintain the "fast production" zero-render workflow, you can burn captions directly into your video using OBS!</p>
+      <ul>
+        <li><strong>🔌 LocalVocal Plugin:</strong> Install the OBS LocalVocal plugin. It uses AI to transcribe your speech locally and outputs a text source you can style directly in OBS.</li>
+        <li><strong>🌐 Window Capture Method:</strong> Open a browser tool like <em>WebCaptioner</em>. Add a "Window Capture" source in OBS to grab the text, apply a Chroma Key or Color Key to remove the background of the browser, and place the text over your video.</li>
+        <li><strong>🎨 Styling:</strong> Use a bold, readable font (like <em>Montserrat</em> or <em>Impact</em>) with a black outline or drop shadow so it pops against any background.</li>
+      </ul>
     </div>
 
-    <div class="callout ok">
-      <h2>✅ The Fix: Illuminate the Floor/Bottom Area</h2>
-      <p>
-        To get a clean key from head to toe, you need <strong>even lighting</strong> across the entire background. Here is how to fix it:
-      </p>
+    <div class="callout">
+      <h2>✂️ Method 2: Auto-Captions in Post-Production</h2>
+      <p>If you don't mind a quick stop in an editor, this is the most popular way to get dynamic, animated captions for social media.</p>
       <ul>
-        <li><strong>💡 Add a floor light:</strong> Place a small fill light on the floor aimed upwards at the bottom half of the green screen to eliminate the shadow falloff.</li>
-        <li><strong>📐 Adjust main lights:</strong> If you don't have an extra light, try angling your main background lights down slightly or moving them back so their light spreads more evenly across the full height of the backdrop.</li>
-        <li><strong>🟩 Check your monitor:</strong> Look at your camera feed without the chroma key applied. The bottom of the screen should be roughly the same bright green as the top!</li>
+        <li><strong>📲 CapCut (Desktop or Mobile):</strong> Drop your OBS recording into CapCut. Click <strong>Text &gt; Auto Captions</strong>. Apply an animated template, and export!</li>
+        <li><strong>🎬 Premiere Pro / DaVinci Resolve:</strong> Use the built-in speech-to-text tools to generate subtitles, style the track, and export.</li>
       </ul>
-      <p>Once you balance the lighting, your chroma key will easily remove the entire background! 🚀</p>
+      <p><em>Pro Tip:</em> 🧠 Even if you use Method 2, your OBS setup saves you hours of green screen rendering, making the captioning step incredibly fast!</p>
     </div>
   </div>
 </body>
