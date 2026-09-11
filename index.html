@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>OBS Live Chroma Key · Sony ZV-1 + Elgato Cam Link 4K</title>
+  <title>🟢 OBS Live Chroma Key · Sony ZV-1 + Elgato Cam Link 4K</title>
   <meta name="description" content="Lock the Sony ZV-1, key green in OBS with the Cam Link 4K, kill spill on Mac, and record a finished talking-head with zero re-render." />
   <meta name="author" content="Rifat Erdem Sahin" />
   <link rel="canonical" href="https://rifaterdemsahin.github.io/obs-live-green-screen/" />
@@ -168,39 +168,39 @@
 <body>
   <nav class="top">
     <div class="inner">
-      <a href="#video">Video</a>
-      <a href="#why">Why hardware keying</a>
-      <a href="#chain">Signal chain</a>
-      <a href="#step-1">1 · Camera lock</a>
-      <a href="#step-2">2 · Chroma Key</a>
-      <a href="#step-3">3 · Spill</a>
-      <a href="#step-4">4 · Scene + record</a>
-      <a href="https://github.com/rifaterdemsahin/obs-live-green-screen">GitHub</a>
+      <a href="#video">🎬 Video</a>
+      <a href="#why">🚫 Why hardware keying</a>
+      <a href="#chain">🔗 Signal chain</a>
+      <a href="#step-1">📷 1 · Camera lock</a>
+      <a href="#step-2">🟢 2 · Chroma Key</a>
+      <a href="#step-3">✨ 3 · Spill</a>
+      <a href="#step-4">🎬 4 · Scene + record</a>
+      <a href="https://github.com/rifaterdemsahin/obs-live-green-screen">🐙 GitHub</a>
     </div>
   </nav>
 
   <div class="wrap">
     <header class="hero">
       <div class="kicker">
-        Live keying
-        <span class="pill">Sony ZV-1</span>
-        <span class="pill">Elgato Cam Link 4K</span>
-        <span class="pill">Mac Mini + OBS</span>
+        🟢 Live keying
+        <span class="pill">📷 Sony ZV-1</span>
+        <span class="pill">🔌 Elgato Cam Link 4K</span>
+        <span class="pill">💻 Mac Mini + OBS</span>
       </div>
-      <h1>Physical green screen, live chroma key, zero re-render.</h1>
+      <h1>🟢 Physical green screen, live chroma key, zero re-render.</h1>
       <p class="lede">
         The Sony ZV-1 feeds a crisp, uncompressed clean HDMI signal into the Cam Link 4K.
         That is the right input for <strong>native OBS Chroma Key</strong> — not an AI background-removal plugin.
       </p>
       <div class="hero-actions">
-        <a class="btn" href="#video">Watch the walkthrough</a>
-        <a class="btn ghost" href="https://youtu.be/UWhA0rqQOeg">YouTube</a>
-        <a class="btn ghost" href="https://github.com/rifaterdemsahin/obs-live-green-screen">Repo</a>
+        <a class="btn" href="#video">▶️ Watch the walkthrough</a>
+        <a class="btn ghost" href="https://youtu.be/UWhA0rqQOeg">📺 YouTube</a>
+        <a class="btn ghost" href="https://github.com/rifaterdemsahin/obs-live-green-screen">🐙 Repo</a>
       </div>
     </header>
 
     <section id="video">
-      <h2>Walkthrough video</h2>
+      <h2>🎬 Walkthrough video</h2>
       <p class="lede" style="margin-bottom:14px">
         FiniteSingularity — <em>Your OBS green screen is all wrong, and the fix is so simple!</em>
       </p>
@@ -213,13 +213,13 @@
           allowfullscreen></iframe>
       </div>
       <p class="video-link">
-        Watch on YouTube: <a href="https://youtu.be/UWhA0rqQOeg">https://youtu.be/UWhA0rqQOeg</a>
+        📺 Watch on YouTube: <a href="https://youtu.be/UWhA0rqQOeg">https://youtu.be/UWhA0rqQOeg</a>
       </p>
     </section>
 
     <section id="why">
       <div class="callout warn">
-        <h2>Do not use AI background removal</h2>
+        <h2>🚫 Do not use AI background removal</h2>
         <p>
           You are lighting a real green screen. AI segmentation often leaves soft edges and flicker around hair.
           Use the camera’s clean HDMI plus OBS’s hardware-friendly Chroma Key filter instead.
@@ -229,27 +229,27 @@
     </section>
 
     <section id="chain">
-      <h2>Signal chain</h2>
+      <h2>🔗 Signal chain</h2>
       <div class="chain" aria-label="Hardware signal path">
-        <div class="node"><strong>Sony ZV-1</strong><span>Clean HDMI, Rec.709, locked exposure</span></div>
-        <div class="arrow" aria-hidden="true">→</div>
-        <div class="node"><strong>Cam Link 4K</strong><span>Uncompressed capture into the Mac Mini</span></div>
-        <div class="arrow" aria-hidden="true">→</div>
-        <div class="node"><strong>OBS Chroma Key</strong><span>Green key + spill reduction</span></div>
-        <div class="arrow" aria-hidden="true">→</div>
-        <div class="node"><strong>Record</strong><span>Talking head already composited</span></div>
+        <div class="node"><strong>📷 Sony ZV-1</strong><span>Clean HDMI, Rec.709, locked exposure</span></div>
+        <div class="arrow" aria-hidden="true">➡️</div>
+        <div class="node"><strong>🔌 Cam Link 4K</strong><span>Uncompressed capture into the Mac Mini</span></div>
+        <div class="arrow" aria-hidden="true">➡️</div>
+        <div class="node"><strong>🟢 OBS Chroma Key</strong><span>Green key + spill reduction</span></div>
+        <div class="arrow" aria-hidden="true">➡️</div>
+        <div class="node"><strong>⏺️ Record</strong><span>Talking head already composited</span></div>
       </div>
     </section>
 
     <section>
       <ol class="steps">
         <li id="step-1">
-          <h2><span class="step-num">1</span> Lock the Sony ZV-1</h2>
+          <h2><span class="step-num">1</span> 📷 Lock the Sony ZV-1</h2>
           <p>Auto camera settings will drift the green, and the key will break mid-take. Freeze everything.</p>
           <ol class="inner">
-            <li><strong>Exposure:</strong> Dial to <strong>Manual (M)</strong>. Example for 60 fps: shutter <code>1/125</code>s, ISO 400 or 800, aperture frozen.</li>
-            <li><strong>White balance:</strong> Switch off Auto White Balance (AWB). Use <strong>Daylight</strong> or a custom Kelvin (e.g. 5600K).</li>
-            <li><strong>Picture Profile:</strong> <strong>PP Off</strong> so the camera outputs standard Rec.709 with usable green contrast.</li>
+            <li>🔒 <strong>Exposure:</strong> Dial to <strong>Manual (M)</strong>. Example for 60 fps: shutter <code>1/125</code>s, ISO 400 or 800, aperture frozen.</li>
+            <li>☀️ <strong>White balance:</strong> Switch off Auto White Balance (AWB). Use <strong>Daylight</strong> or a custom Kelvin (e.g. 5600K).</li>
+            <li>🎨 <strong>Picture Profile:</strong> <strong>PP Off</strong> so the camera outputs standard Rec.709 with usable green contrast.</li>
           </ol>
           <table>
             <thead>
@@ -266,7 +266,7 @@
         </li>
 
         <li id="step-2">
-          <h2><span class="step-num">2</span> Configure Chroma Key in OBS</h2>
+          <h2><span class="step-num">2</span> 🟢 Configure Chroma Key in OBS</h2>
           <ol class="inner">
             <li>Right-click the <strong>Cam Link / ZV-1</strong> source → <strong>Filters</strong>.</li>
             <li>In <em>Effect Filters</em>, click <strong>+</strong> → <strong>Chroma Key</strong>.</li>
@@ -287,7 +287,7 @@
         </li>
 
         <li id="step-3">
-          <h2><span class="step-num">3</span> Fix green spill (especially on Mac)</h2>
+          <h2><span class="step-num">3</span> ✨ Fix green spill (especially on Mac)</h2>
           <p>Green light bounces onto hair, shoulders, and skin. Kill that bounce in the filter stack, not in a later grade.</p>
           <ol class="inner">
             <li>Still in <strong>Chroma Key</strong>, raise <strong>Spill Color Reduction</strong> (Green) to about <strong>100–200</strong>.</li>
@@ -296,28 +296,28 @@
           </ol>
           <div class="grid-2" style="margin-top:14px">
             <div class="card">
-              <h3>Filter order</h3>
+              <h3>📚 Filter order</h3>
               <p class="mono" style="color:var(--muted);margin:0">1. Chroma Key<br>2. Color Correction</p>
               <p style="margin-top:10px;color:var(--muted)">OBS applies effect filters top to bottom. Color Correction must sit under the key.</p>
             </div>
             <div class="card">
-              <h3>What “done” looks like</h3>
+              <h3>✅ What “done” looks like</h3>
               <p style="margin:0;color:var(--muted)">No lime outline on hair. Skin is not mint. Shirt opacity is 100%. Background is the image or loop — not green, not a hole.</p>
             </div>
           </div>
         </li>
 
         <li id="step-4">
-          <h2><span class="step-num">4</span> Layer the scene and record</h2>
+          <h2><span class="step-num">4</span> 🎬 Layer the scene and record</h2>
           <p>Sources window, top to bottom:</p>
           <div class="stack" role="img" aria-label="OBS source stack">
-            <div class="layer top"><strong>Top</strong> — Sony ZV-1 (Cam Link 4K) with Chroma Key applied</div>
-            <div class="layer"><strong>Bottom</strong> — Replacement background (image, video loop, or Display Capture)</div>
+            <div class="layer top"><strong>⬆️ Top</strong> — Sony ZV-1 (Cam Link 4K) with Chroma Key applied</div>
+            <div class="layer"><strong>⬇️ Bottom</strong> — Replacement background (image, video loop, or Display Capture)</div>
           </div>
           <pre> [ Top Source ]    → Sony ZV-1 (Cam Link 4K + Chroma Key)
  [ Bottom Source ] → Replacement background (image / loop / display)</pre>
           <div class="callout ok" style="margin-top:16px">
-            <h3>Verify with a 15-second clip</h3>
+            <h3>✅ Verify with a 15-second clip</h3>
             <p>
               Put the new background behind you, hit <strong>Start Recording</strong>, talk for 15 seconds, stop.
               Play the file in QuickTime. If edges are sharp and skin has no green tint, the setup is finished.
@@ -329,19 +329,19 @@
     </section>
 
     <section>
-      <h2>Quick checklist</h2>
+      <h2>✅ Quick checklist</h2>
       <div class="card">
-        <p><span class="check">✓</span> ZV-1 on Manual, WB locked, Picture Profile off</p>
-        <p><span class="check">✓</span> Cam Link 4K as the OBS video source (not Continuity Camera / FaceTime)</p>
-        <p><span class="check">✓</span> Chroma Key on Green, Similarity 300–400, Smoothness 10–80</p>
-        <p><span class="check">✓</span> Spill reduction 100–200, Color Correction under the key</p>
-        <p><span class="check">✓</span> Camera source above the background in the scene</p>
-        <p style="margin:0"><span class="check">✓</span> 15s QuickTime check before a real take</p>
+        <p><span class="check">✅</span> ZV-1 on Manual, WB locked, Picture Profile off</p>
+        <p><span class="check">🔌</span> Cam Link 4K as the OBS video source (not Continuity Camera / FaceTime)</p>
+        <p><span class="check">🟢</span> Chroma Key on Green, Similarity 300–400, Smoothness 10–80</p>
+        <p><span class="check">✨</span> Spill reduction 100–200, Color Correction under the key</p>
+        <p><span class="check">📚</span> Camera source above the background in the scene</p>
+        <p style="margin:0"><span class="check">🎥</span> 15s QuickTime check before a real take</p>
       </div>
     </section>
 
     <footer>
-      <p>Rifat Erdem Sahin · <a href="https://github.com/rifaterdemsahin/obs-live-green-screen">rifaterdemsahin/obs-live-green-screen</a> · GitHub Pages · <a href="https://youtu.be/UWhA0rqQOeg">Walkthrough video</a></p>
+      <p>Rifat Erdem Sahin · <a href="https://github.com/rifaterdemsahin/obs-live-green-screen">🐙 rifaterdemsahin/obs-live-green-screen</a> · 🌐 GitHub Pages · <a href="https://youtu.be/UWhA0rqQOeg">🎬 Walkthrough video</a></p>
     </footer>
   </div>
 </body>
